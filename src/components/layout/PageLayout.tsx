@@ -4,7 +4,7 @@
  * Props:
  * - `children`: The content to display inside the main content area.
  *
- * @param {PageLayoutProps} props - The props for the component.
+ * @param {PageLayoutProps} props
  * @returns {JSX.Element} The rendered page layout component.
  */
 

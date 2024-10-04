@@ -66,7 +66,7 @@ function SearchPage() {
         <AnimatePresence>
           {data && (
             <MotionBox
-              key="results-list"
+              key={data[0]?.url || "results-list"}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}

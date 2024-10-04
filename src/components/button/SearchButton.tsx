@@ -7,7 +7,7 @@
  * - `searchTerm`: The current value of the search input.
  * - `setShowError`: Sets an error state if the search term is empty.
  *
- * @param {SearchButtonProps} props - The props for the button.
+ * @param {SearchButtonProps} props
  * @returns {JSX.Element} The animated search button.
  */
 

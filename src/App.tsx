@@ -37,7 +37,7 @@ function App() {
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
-        <Router>
+        <Router basename="/sw-api">
           <ChakraProvider theme={theme}>
             <Layout>
               <Routes>

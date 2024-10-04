@@ -6,7 +6,7 @@
  * - `person`: The Star Wars character object (optional).
  * - `searchedPersonName`: The fallback name if the character is not found.
  *
- * @param {DetailsCardProps} props - The props for the component.
+ * @param {DetailsCardProps} props
  * @returns {JSX.Element} The rendered card with the character details or a fallback message.
  */
 

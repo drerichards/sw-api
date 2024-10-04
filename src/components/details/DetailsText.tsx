@@ -6,7 +6,7 @@
  * - `attribute`: The value of the attribute (optional).
  * - `marginTop`, `marginBottom`, `marginY`: Control the component's margins.
  *
- * @param {DetailsTextProps} props - The props for the component.
+ * @param {DetailsTextProps} props
  * @returns {JSX.Element} The rendered text for the attribute.
  */
 

@@ -12,7 +12,7 @@
  * - `setShowError`: Function to update the error state.
  * - `isLoading`: Boolean indicating whether the search is in progress.
  *
- * @param {SearchFormProps} props - The props for the component.
+ * @param {SearchFormProps} props
  * @returns {JSX.Element} The rendered search form.
  */
 

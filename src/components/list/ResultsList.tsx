@@ -8,7 +8,7 @@
  * The component renders a list of `ResultItem` components for each result. If `handlePersonClick` is provided,
  * it will be passed to each `ResultItem` to handle clicks on the search results.
  *
- * @param {ResultsListProps} props - The props for the component.
+ * @param {ResultsListProps} props
  * @returns {JSX.Element} The rendered list of search results.
  */
 
