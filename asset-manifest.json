@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/sw-api/static/css/main.9041c6cd.css",
-    "main.js": "/sw-api/static/js/main.9bb8ff39.js",
+    "main.js": "/sw-api/static/js/main.533bdb47.js",
     "static/js/453.c86d25fa.chunk.js": "/sw-api/static/js/453.c86d25fa.chunk.js",
     "static/media/monaspace-krypton-latin-600-normal.woff": "/sw-api/static/media/monaspace-krypton-latin-600-normal.3efbb567124aced6c5fd.woff",
     "static/media/monaspace-krypton-latin-600-normal.woff2": "/sw-api/static/media/monaspace-krypton-latin-600-normal.0ba868ab76728602dad4.woff2",
@@ -11,11 +11,11 @@
     "static/media/titillium-web-latin-ext-400-normal.woff2": "/sw-api/static/media/titillium-web-latin-ext-400-normal.fc46e868e0ca6c2fa856.woff2",
     "index.html": "/sw-api/index.html",
     "main.9041c6cd.css.map": "/sw-api/static/css/main.9041c6cd.css.map",
-    "main.9bb8ff39.js.map": "/sw-api/static/js/main.9bb8ff39.js.map",
+    "main.533bdb47.js.map": "/sw-api/static/js/main.533bdb47.js.map",
     "453.c86d25fa.chunk.js.map": "/sw-api/static/js/453.c86d25fa.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.9041c6cd.css",
-    "static/js/main.9bb8ff39.js"
+    "static/js/main.533bdb47.js"
   ]
 }
