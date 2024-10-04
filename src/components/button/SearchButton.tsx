@@ -13,6 +13,7 @@
 
 import { SearchIcon } from "@chakra-ui/icons";
 import { Button } from "@chakra-ui/react";
+import { chakra } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { FC, FormEvent } from "react";
 
@@ -23,7 +24,7 @@ interface SearchButtonProps {
   setShowError: (showError: boolean) => void;
 }
 
-const MotionButton = motion.create(Button);
+const MotionButton = chakra(motion(Button));
 
 const SearchButton: FC<SearchButtonProps> = ({
   handleSearch,

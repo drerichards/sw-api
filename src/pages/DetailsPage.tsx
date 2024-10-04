@@ -17,12 +17,13 @@ import { fetchStarWarsPerson } from "../api/fetchStarWarsPerson";
 import DetailsCard from "../components/details/DetailsCard";
 import { useLocation, useParams } from "react-router-dom";
 import BackButton from "../components/button/BackButton";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Box, Spinner, Text } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
+import { chakra } from "@chakra-ui/react";
 import { StarWarsPerson } from "../types";
 
-const MotionBox = motion.create(Box);
+const MotionBox = chakra(motion(Box));
 
 function DetailsPage() {
   const location = useLocation();
@@ -39,7 +40,6 @@ function DetailsPage() {
     enabled: !!id && !data,
   });
 
-  // Check if data exists from location state, otherwise use fetched data
   const person = data
     ? data.find((person: StarWarsPerson) => person.name === personName)
     : fetchedPerson;

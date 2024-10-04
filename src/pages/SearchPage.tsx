@@ -18,11 +18,11 @@ import ResultsList from "../components/list/ResultsList";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
-import { Card } from "@chakra-ui/react";
-import { Box } from "@chakra-ui/react";
+import { Card, Box } from "@chakra-ui/react";
+import { chakra } from "@chakra-ui/react";
 import { StarWarsPerson } from "types";
 
-const MotionBox = motion.create(Box);
+const MotionBox = chakra(motion(Box));
 
 function SearchPage() {
   const { searchTerm, setSearchTerm, data, isLoading, error, handleSearch } =
@@ -40,54 +40,50 @@ function SearchPage() {
     if (person) {
       navigate(`/character-details/${id}`, {
         state: { personName: person.name, data },
-      }); // Pass personName and data
+      });
     } else {
       console.error("Person not found");
     }
   };
 
   return (
-    <>
-      <Card
-        borderTop="8px"
-        borderColor="brand.800"
-        borderRadius="md"
-        marginTop={8}
-      >
-        <Box border="1px" borderColor="gray.200" padding="3">
-          <SearchForm
-            searchTerm={searchTerm}
-            handleInputChange={handleInputChange}
-            handleSearch={handleSearch}
-            showError={showError}
-            setShowError={setShowError}
-            isLoading={isLoading}
-          />
-
-          {error && <p style={{ color: "red" }}>{error.message}</p>}
-
-          <AnimatePresence>
-            {data && (
-              <MotionBox
-                key="results-list"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                borderColor="gray.200"
-                padding="0"
-                borderRadius="md"
-              >
-                <ResultsList
-                  results={data}
-                  handlePersonClick={handlePersonClick}
-                />
-              </MotionBox>
-            )}
-          </AnimatePresence>
-        </Box>
-      </Card>
-    </>
+    <Card
+      borderTop="8px"
+      borderColor="brand.800"
+      borderRadius="md"
+      marginTop={8}
+    >
+      <Box border="1px" borderColor="gray.200" padding="3">
+        <SearchForm
+          searchTerm={searchTerm}
+          handleInputChange={handleInputChange}
+          handleSearch={handleSearch}
+          showError={showError}
+          setShowError={setShowError}
+          isLoading={isLoading}
+        />
+        {error && <p style={{ color: "red" }}>{error.message}</p>}
+        <AnimatePresence>
+          {data && (
+            <MotionBox
+              key="results-list"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              borderColor="gray.200"
+              padding="0"
+              borderRadius="md"
+            >
+              <ResultsList
+                results={data}
+                handlePersonClick={handlePersonClick}
+              />
+            </MotionBox>
+          )}
+        </AnimatePresence>
+      </Box>
+    </Card>
   );
 }
 
