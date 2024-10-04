@@ -35,11 +35,11 @@ const theme = extendTheme({ fonts, colors });
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Router>
-        <ChakraProvider theme={theme}>
-          <Layout>
-            <ErrorBoundary>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <ChakraProvider theme={theme}>
+            <Layout>
               <Routes>
                 <Route path="/" element={<SearchPage />} />
                 <Route
@@ -47,11 +47,11 @@ function App() {
                   element={<DetailsPage />}
                 />
               </Routes>
-            </ErrorBoundary>
-          </Layout>
-        </ChakraProvider>
-      </Router>
-    </QueryClientProvider>
+            </Layout>
+          </ChakraProvider>
+        </Router>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 }
 

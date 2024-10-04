@@ -22,7 +22,7 @@ import { Box, Spinner, Text } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { StarWarsPerson } from "../types";
 
-const MotionBox = motion(Box);
+const MotionBox = motion.create(Box);
 
 function DetailsPage() {
   const location = useLocation();

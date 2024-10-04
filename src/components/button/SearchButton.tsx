@@ -23,7 +23,7 @@ interface SearchButtonProps {
   setShowError: (showError: boolean) => void;
 }
 
-const MotionButton = motion(Button);
+const MotionButton = motion.create(Button);
 
 const SearchButton: FC<SearchButtonProps> = ({
   handleSearch,

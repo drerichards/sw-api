@@ -22,7 +22,7 @@ import { Card } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react";
 import { StarWarsPerson } from "types";
 
-const MotionBox = motion(Box);
+const MotionBox = motion.create(Box);
 
 function SearchPage() {
   const { searchTerm, setSearchTerm, data, isLoading, error, handleSearch } =
