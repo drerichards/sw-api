@@ -16,6 +16,7 @@ A React application that allows users to search for Star Wars characters using t
 - **Tanstack React Query**: Handles data fetching and caching.
 - **Chakra UI**: For styling the components with ease.
 - **Framer Motion**: Adds animations to enhance the user experience.
+- **Styled Components**: Enables dynamic, scoped CSS keeping styles modular and tied to the component logic.
 - **SWAPI (Star Wars API)**: The external API for retrieving Star Wars data.
 
 ## Installation
@@ -38,13 +39,6 @@ A React application that allows users to search for Star Wars characters using t
 
 The app will be available at http://localhost:3000.
 
-## Technologies
-
-• **React**
-• **Chakra UI** for styling
-• **Framer Motion** for animations
-• **React Query** for data fetching
-
 ## How It Works
 
 1. The user enters a search term (character name) in the search form.
@@ -56,29 +50,26 @@ The app will be available at http://localhost:3000.
 
 ### SearchPage
 
-• Renders the search form and list of results.
-• Caches search results for 5 minutes.
+- Renders the search form and list of results.
+- Caches search results for 5 minutes.
 
 ### DetailsPage
 
-• Displays the character’s details based on the ID provided in the URL.
+- Displays the character’s details based on the ID provided in the URL.
 
 ### SearchForm
 
-• Handles user input for searching characters.
+- Handles user input for searching characters.
 
 ### ResultsList
 
-• Displays the list of search results.
+- Displays the list of search results.
 
 ### DetailsCard
 
-• Shows the character’s information in a structured format.
+- Shows the character’s information in a structured format.
 
 ### Custom Hooks
 
-• **useStarWarsSearch**: Custom hook for fetching and caching Star Wars characters.
-
-## License
-
-This project is licensed under the MIT License.
+- **useStarWarsSearch**: Custom hook for fetching and caching Star Wars characters.
+- **useFetchFilmTitles**: Custom hook for fetching film titles based on a Star Wars person’s film URLs.
