@@ -1,61 +1,69 @@
 /**
- * A page component that displays a Star Wars person's details.
+ * It fetches the person data from the SWAPI API if the person is not provided
+ * in the state from the search page.
  *
- * It uses the person's ID from the URL parameters to fetch their details using the `fetchStarWarsPerson` function.
- * If the person is not found, an error message is shown.
+ * The page renders a `DetailsCard` and a `BackButton` component.
  *
- * If the user navigated from the search page, the component also uses the search results passed in via `location.state`.
- * In this case, it renders the person's details from the search results. If the person is not found in the search
- * results, it fetches the person's data from the API.
- *
- * The component includes a back button that navigates back to the search page.
- *
- * @returns {JSX.Element} A JSX element displaying the person's details or an error message.
+ * If the person is not found or fetching fails, it renders an error message.
  */
 
 import { fetchStarWarsPerson } from "../api/fetchStarWarsPerson";
+import LoadingSpinner from "components/spinner/LoadingSpinner";
+import { useFetchFilmTitles } from "hooks/useFetchFilmTitles";
+import { StyledErrorText } from "./styled/SearchPage.styled";
 import DetailsCard from "../components/details/DetailsCard";
 import { useLocation, useParams } from "react-router-dom";
 import BackButton from "../components/button/BackButton";
 import { AnimatePresence, motion } from "framer-motion";
-import { Box, Spinner, Text } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { chakra } from "@chakra-ui/react";
 import { StarWarsPerson } from "../types";
+import { Box } from "@chakra-ui/react";
 
 const MotionBox = chakra(motion(Box));
 
 function DetailsPage() {
   const location = useLocation();
   const { id } = useParams<{ id: string }>();
-  const { data, personName } = location.state || {};
+  const { personName, data } = location.state || {};
 
   const {
     data: fetchedPerson,
-    error,
     isLoading,
+    error,
   } = useQuery<StarWarsPerson[], Error>({
     queryKey: ["starWarsPerson", id],
-    queryFn: () => fetchStarWarsPerson(id as string),
-    enabled: !!id && !data,
+    queryFn: () => fetchStarWarsPerson(personName),
+    enabled: !!id && !data, // Only fetches when id exists but data is not provided from search
   });
 
-  const person = data
-    ? data.find((person: StarWarsPerson) => person.name === personName)
-    : fetchedPerson;
+  // When the user navigates from search (with data) or
+  // When user directly visits the details page (will fetch person from API)
+  const person = data || fetchedPerson?.[0];
 
-  if (isLoading) {
-    return <Spinner />;
+  const {
+    fetchAndAddFilmTitles,
+    isLoading: isLoadingFilms,
+    filmError,
+  } = useFetchFilmTitles(person);
+
+  // Fetch film titles when the person is available
+  if (person && !person.filmTitles?.length && !isLoadingFilms) {
+    fetchAndAddFilmTitles();
   }
 
-  if (error) {
-    return <Text color="red">Error fetching person details.</Text>;
+  if (isLoading || isLoadingFilms) {
+    return <LoadingSpinner />;
+  }
+
+  if (error || filmError) {
+    return <StyledErrorText>{error?.message || filmError}</StyledErrorText>;
   }
 
   return (
     <AnimatePresence>
       <MotionBox
-        key={person?.id || id}
+        key="backButton"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -10 }}
@@ -65,16 +73,13 @@ function DetailsPage() {
       </MotionBox>
 
       <MotionBox
-        key={person?.id || id}
+        key="detailsCard"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 10 }}
         transition={{ duration: 0.2 }}
       >
-        <DetailsCard
-          person={person}
-          searchedPersonName={personName || person?.name}
-        />
+        <DetailsCard person={person} />
       </MotionBox>
     </AnimatePresence>
   );

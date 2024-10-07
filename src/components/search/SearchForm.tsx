@@ -1,19 +1,18 @@
 /**
- * A form for searching Star Wars characters by name.
- *
- * It includes an input field for the search term, a button to submit the form, and helper text or error messages
- * depending on the state.
+ * A form for searching Star Wars characters.
  *
  * Props:
- * - `searchTerm`: The current value of the search input.
- * - `handleSearch`: Function to handle form submission.
- * - `handleInputChange`: Function to handle changes in the search input.
- * - `showError`: Boolean that indicates whether an error is shown.
- * - `setShowError`: Function to update the error state.
- * - `isLoading`: Boolean indicating whether the search is in progress.
+ * - `searchTerm`: The current search term.
+ * - `handleSearch`: A function to execute when the form is submitted.
+ * - `handleInputChange`: A function to execute when the user types in the input field.
+ * - `showError`: A boolean indicating whether an error message should be shown.
+ * - `setShowError`: A function to execute to set `showError` to the given value.
+ * - `isLoading`: A boolean indicating whether the component is in a loading state.
  *
- * @param {SearchFormProps} props
- * @returns {JSX.Element} The rendered search form.
+ * When the form is submitted, it calls `handleSearch` with the current value of
+ * `searchTerm`. When the user types in the input field, it calls `handleInputChange`
+ * with the event. If `showError` is true, it renders an error message instead of
+ * a help text. If `isLoading` is true, it renders a loading animation.
  */
 
 import {
@@ -24,6 +23,7 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import SearchButton from "../button/SearchButton";
+import { FormText } from "../../constants";
 
 interface SearchFormProps {
   searchTerm: string;
@@ -57,9 +57,8 @@ const SearchForm = ({
           borderEndRadius={0}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInputChange(e);
-            setShowError(false); // Resets error as user types
           }}
-          placeholder="May the Force be with you..."
+          placeholder={FormText.PLACEHOLDER_TEXT}
         />
         <SearchButton
           handleSearch={handleSearch}
@@ -69,11 +68,9 @@ const SearchForm = ({
         />
       </Flex>
       {!showError ? (
-        <FormHelperText>
-          Enter a character name (e.g., Luke Skywalker)
-        </FormHelperText>
+        <FormHelperText>{FormText.HELPER_TEXT}</FormHelperText>
       ) : (
-        <FormErrorMessage>A name is required</FormErrorMessage>
+        <FormErrorMessage>{FormText.ERROR_TEXT}</FormErrorMessage>
       )}
     </FormControl>
   );

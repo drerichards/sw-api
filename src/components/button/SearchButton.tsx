@@ -2,7 +2,7 @@
  * A button component that triggers a search action and animates to show "Searching..." when in a loading state.
  *
  * Props:
- * - `handleSearch`: Function to execute when the button is clicked.
+ * - `handleSearch`: Function to execute useStarWarsSearch when the button is clicked.
  * - `isLoading`: Controls the loading state and animation of the button.
  * - `searchTerm`: The current value of the search input.
  * - `setShowError`: Sets an error state if the search term is empty.
@@ -11,9 +11,9 @@
  * @returns {JSX.Element} The animated search button.
  */
 
+import { Button, chakra } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
-import { Button } from "@chakra-ui/react";
-import { chakra } from "@chakra-ui/react";
+import { LoadingText } from "../../constants";
 import { motion } from "framer-motion";
 import { FC, FormEvent } from "react";
 
@@ -54,7 +54,7 @@ const SearchButton: FC<SearchButtonProps> = ({
       transition={{ duration: 0.4, ease: "easeInOut" }}
       style={{ overflow: "hidden", whiteSpace: "nowrap" }}
     >
-      {isLoading ? <span>Searching...</span> : <SearchIcon />}
+      {isLoading ? <span>{LoadingText.SEARCHING_TEXT}</span> : <SearchIcon />}
     </MotionButton>
   );
 };

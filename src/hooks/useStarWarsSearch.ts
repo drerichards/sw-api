@@ -1,24 +1,27 @@
 /**
- * Hook that fetches a Star Wars person from the SWAPI API and caches it.
+ * It fetches the person data from the SWAPI API if the person is not provided
+ * in the state from the search page, and returns the data and a function to
+ * trigger the search.
  *
- * The hook takes no arguments.
+ * The search term is persisted in the URL using react-router's
+ * `useSearchParams`.
  *
- * It returns an object with the following properties:
- * - `searchTerm`: The current search term. Can be updated with `setSearchTerm`.
- * - `setSearchTerm`: Updates `searchTerm` to the given value.
- * - `data`: The fetched data, or undefined if not fetched yet.
- * - `isLoading`: A boolean indicating if the data is being fetched, or if it was
- *   fetched recently (i.e., within the last 5 minutes).
- * - `error`: An error if the fetch failed. The error is cleared when a new search
- *   term is entered.
- * - `handleSearch`: A function to execute when the search form is submitted.
- *   It fetches the person with the current `searchTerm` and updates the URL with
- *   the search term to persist it when navigating back.
+ * @returns An object with the following properties:
+ * - `searchTerm`: The current search term.
+ * - `setSearchTerm`: A function to update the search term.
+ * - `data`: The fetched data, or `undefined` if there was an error.
+ * - `isLoading`: A boolean indicating whether the hook is currently
+ *   fetching data.
+ * - `error`: An error object if there was an error fetching data, or
+ *   `undefined` otherwise.
+ * - `handleSearch`: A function to trigger the search, which updates the
+ *   URL and refetches the data.
  */
 
 import { fetchStarWarsPerson } from "../api/fetchStarWarsPerson";
 import { useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { AlertMessages } from "../constants";
 import { useState, useEffect } from "react";
 import { StarWarsPerson } from "../types";
 
@@ -35,19 +38,19 @@ export const useStarWarsSearch = () => {
     StarWarsPerson[],
     Error
   >({
-    queryKey: ["starWarsPerson", searchTerm],
+    queryKey: ["starWarsPerson", searchTerm], // caches the term to "starWarsPerson" like localStorage
     queryFn: () => fetchStarWarsPerson(searchTerm),
     enabled: false, // Only fetch when triggered manually
     staleTime: 1000 * 60 * 5, // Cache for 5 minutes
-    refetchOnWindowFocus: false,
-    retry: false,
+    refetchOnWindowFocus: false, // Doesn't need to refetch since the data won't change
+    retry: false, // No retries if errs out
   });
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     const trimmedSearchTerm = searchTerm.trim();
     if (!trimmedSearchTerm) {
-      alert("Please enter a valid search term.");
+      alert(AlertMessages.VALID_SEARCH_TERM_TEXT);
       return;
     }
     setSearchParams({ search: trimmedSearchTerm });
@@ -58,7 +61,7 @@ export const useStarWarsSearch = () => {
     searchTerm,
     setSearchTerm,
     data,
-    isLoading: isLoading || isFetching,
+    isLoading: isLoading || isFetching, // isLoading = initial || isFetching = refetch
     error,
     handleSearch,
   };

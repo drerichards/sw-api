@@ -1,16 +1,20 @@
 /**
- * A component for displaying a text attribute with optional margins.
+ * A component that renders a text with a title and an attribute.
  *
- * Props:
- * - `attributeTitle`: The title of the attribute.
- * - `attribute`: The value of the attribute (optional).
- * - `marginTop`, `marginBottom`, `marginY`: Control the component's margins.
+ * @param {string} attributeTitle - The title of the attribute.
+ * @param {string} [attribute] - The value of the attribute.
+ * @param {number} [marginTop] - The margin at the top of the component.
+ * @param {number} [marginBottom] - The margin at the bottom of the component.
+ * @param {number} [marginY] - The margin at the top and bottom of the component.
  *
- * @param {DetailsTextProps} props
- * @returns {JSX.Element} The rendered text for the attribute.
+ * @returns {JSX.Element} A JSX element with the attribute title and value.
  */
 
-import { Flex, Text } from "@chakra-ui/react";
+import {
+  StyledDetailsTextContainer,
+  StyledDetailsText,
+  StyledDetailsFlex,
+} from "./styled/Details.styled";
 
 interface DetailsTextProps {
   attributeTitle: string;
@@ -28,21 +32,18 @@ const DetailsText = ({
   marginY,
 }: DetailsTextProps) => {
   return (
-    <Text
-      fontSize="lg"
+    <StyledDetailsTextContainer
       marginTop={marginTop}
       marginBottom={marginBottom}
       marginY={marginY}
     >
-      <Flex alignItems="center">
+      <StyledDetailsFlex>
         <b>{attributeTitle}:</b>
         {attribute && (
-          <Text marginLeft={2} fontSize="md">
-            {attribute}
-          </Text>
+          <StyledDetailsText marginLeft={2}>{attribute}</StyledDetailsText>
         )}
-      </Flex>
-    </Text>
+      </StyledDetailsFlex>
+    </StyledDetailsTextContainer>
   );
 };
 

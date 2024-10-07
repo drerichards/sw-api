@@ -1,50 +1,41 @@
-import ExternalLinkItem from "./ExternalLinkItem";
-import InternalLinkItem from "./InternalLinkItem";
-import { Box } from "@chakra-ui/react";
+/**
+ * A component for rendering a single search result.
+ *
+ * Props:
+ * - `result`: A Star Wars person object with a name and a URL.
+ * - `handlePersonClick`: A function to execute when the component is clicked.
+ *    It's passed the ID of the person in the URL.
+ *
+ * Renders a styled box with a chevron icon and the person's name.
+ * When clicked, it calls `handlePersonClick` with the ID of the person.
+ */
+
+import {
+  StyledBoxContainer,
+  StyledFlex,
+  ChevronIcon,
+  StyledText,
+} from "./styled/List.styled";
+import { StarWarsPerson } from "types";
 
 interface ResultItemProps {
-  result: string | { name: string; url: string };
-  handlePersonClick?: (id: string) => void;
+  result: StarWarsPerson;
+  handlePersonClick: (person: StarWarsPerson) => void;
 }
 
 const ResultItem = ({ result, handlePersonClick }: ResultItemProps) => {
-  const isStringResult = typeof result === "string";
-
-  // Extract ID if result is an object
   const handleClick = () => {
-    if (!isStringResult && handlePersonClick) {
-      const id = extractIdFromUrl(result.url); // Use the utility function here
-      handlePersonClick(id); // Pass only the ID
-    }
+    handlePersonClick(result);
   };
 
   return (
-    <Box
-      _hover={{
-        bg: "brand.600",
-        transition: "background-color 0.3s ease",
-      }}
-      borderRadius="md"
-      bg="brand.200"
-      boxShadow="base"
-      onClick={handleClick} // Call the handler on click
-      paddingLeft="3"
-      paddingY="2"
-      mb="1"
-    >
-      {isStringResult ? (
-        <ExternalLinkItem link={result} />
-      ) : (
-        <InternalLinkItem name={result.name} />
-      )}
-    </Box>
+    <StyledBoxContainer onClick={handleClick}>
+      <StyledFlex>
+        <ChevronIcon />
+        <StyledText>{result.name}</StyledText>
+      </StyledFlex>
+    </StyledBoxContainer>
   );
 };
 
 export default ResultItem;
-
-// Utility function to extract the ID from the URL
-const extractIdFromUrl = (url: string): string => {
-  const matches = url.match(/\/people\/(\d+)\//); // Regex to match and extract ID
-  return matches ? matches[1] : "";
-};

@@ -1,13 +1,11 @@
 /**
- * Displays a card with detailed information about a Star Wars character.
- * Renders the character's name, height, weight, and films, or shows a fallback message if no details are available.
+ * If `person` is provided, it renders a card with the person's name, height,
+ * weight, and a list of films they appear in. If `person` is not provided, it
+ * renders a card with a message indicating that no details are available.
  *
- * Props:
- * - `person`: The Star Wars character object (optional).
- * - `searchedPersonName`: The fallback name if the character is not found.
+ * @param {DetailsCardProps} props - An object with a `StarWarsPerson` property.
  *
- * @param {DetailsCardProps} props
- * @returns {JSX.Element} The rendered card with the character details or a fallback message.
+ * @returns {JSX.Element} A JSX element representing the component.
  */
 
 import {
@@ -20,22 +18,22 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { metricToImperialHeight, metricToImperialWeight } from "../../helpers";
-import ResultsList from "../../components/list/ResultsList";
+import { ErrorMessages } from "../../constants";
 import { StarWarsPerson } from "../../types";
+import { Flex } from "@chakra-ui/react";
 import DetailsText from "./DetailsText";
 
 interface DetailsCardProps {
   person?: StarWarsPerson;
-  searchedPersonName: string;
 }
 
-const DetailsCard = ({ person, searchedPersonName }: DetailsCardProps) => {
+const DetailsCard = ({ person }: DetailsCardProps) => {
   return (
     <Card borderTop="8px" borderColor="brand.800" borderRadius="md">
       <Box border="1px" borderColor="gray.200" padding="3">
         <CardHeader>
           <Heading size={"md"}>
-            Details of {person?.name || searchedPersonName || "Unknown Person"}
+            {person?.name ? `Details for ${person?.name}` : "Unknown Person"}
           </Heading>
         </CardHeader>
         <Divider />
@@ -55,7 +53,11 @@ const DetailsCard = ({ person, searchedPersonName }: DetailsCardProps) => {
               />
               <DetailsText
                 attributeTitle="Weight"
-                attribute={metricToImperialWeight(person.mass)}
+                attribute={
+                  person.mass !== "unknown"
+                    ? metricToImperialWeight(person.mass)
+                    : "Unknown"
+                }
                 marginY={3}
               />
               <DetailsText
@@ -63,11 +65,25 @@ const DetailsCard = ({ person, searchedPersonName }: DetailsCardProps) => {
                 marginTop={3}
                 marginBottom={1}
               />
-              <ResultsList results={person.films} />
+              <>
+                {person.filmTitles &&
+                  person.filmTitles.map((filmTitle) => (
+                    <Flex
+                      key={filmTitle.split(" ").join("-")}
+                      alignItems="center"
+                      marginLeft={6}
+                    >
+                      <span style={{ marginRight: "3px" }}>&#8226;</span>
+                      <Text marginLeft={2} fontSize="md">
+                        {filmTitle}
+                      </Text>
+                    </Flex>
+                  ))}
+              </>
             </Box>
           ) : (
             <Text fontSize="lg" marginY={3}>
-              No details available for {searchedPersonName || "Unknown Person"}
+              {ErrorMessages.UNKNOWN_PERSON_TEXT}
             </Text>
           )}
         </CardBody>

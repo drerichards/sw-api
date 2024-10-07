@@ -1,8 +1,8 @@
 /**
- * A ghost button with an ArrowBackIcon that, when clicked, navigates one step
- * backwards in the browser history.
+ * When clicked, it calls the `navigate` function with the argument `-1` to go
+ * back to the previous page.
  *
- * @returns {JSX.Element} The button component.
+ * @returns {JSX.Element} The rendered button.
  */
 
 import { ArrowBackIcon } from "@chakra-ui/icons";
